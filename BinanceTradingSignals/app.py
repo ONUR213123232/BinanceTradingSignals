@@ -410,6 +410,7 @@ def proxy_binance(endpoint):
         }), 500
 
 @app.route('/api/futures/symbols')
+@app.route('/api/futures/symbols:1')
 def get_futures_symbols_proxy():
     """Futures sembolleri için proxy endpoint"""
     try:
@@ -428,6 +429,7 @@ def get_futures_symbols_proxy():
         }), 500
 
 @app.route('/api/futures/klines')
+@app.route('/api/klines')
 def get_futures_klines_proxy():
     """Futures kline verileri için proxy endpoint"""
     try:
