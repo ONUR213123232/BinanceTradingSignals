@@ -4,10 +4,10 @@
     { "src": "app.py", "use": "@vercel/python" },
     { "src": "static/**", "use": "@vercel/static" }
   ],
-  "routes": [
-    { "src": "/api/binance/(.*)", "dest": "/app.py" },
-    { "src": "/static/(.*)", "dest": "/static/$1" },
-    { "src": "/(.*)", "dest": "/app.py" }
+  "rewrites": [
+    { "source": "/api/binance/(.*)", "destination": "/app.py" },
+    { "source": "/static/(.*)", "destination": "/static/$1" },
+    { "source": "/(.*)", "destination": "/app.py" }
   ],
   "headers": [
     {
