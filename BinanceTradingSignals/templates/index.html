@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Binance Trading Signals | FinyX Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="cyber-grid"></div>
+        <div class="floating-particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="logo">
+                <i class="fas fa-chart-line"></i>
+                <span>FinyX</span>
+                <span class="pro-badge">PRO</span>
+            </div>
+            <div class="status-indicator" id="connectionStatus">
+                <div class="pulse-dot"></div>
+                <span>Sistem Hazır</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- Control Panel -->
+            <section class="control-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-cogs"></i> Kontrol Paneli</h2>
+                </div>
+                <div class="panel-content">
+                    <div class="controls-row">
+                        <div class="control-group">
+                            <label for="timeframe">Zaman Dilimi</label>
+                            <select id="timeframe" class="cyber-select">
+                                <option value="1m">1 Dakika</option>
+                                <option value="3m">3 Dakika</option>
+                                <option value="5m" selected>5 Dakika</option>
+                                <option value="15m">15 Dakika</option>
+                                <option value="30m">30 Dakika</option>
+                                <option value="1h">1 Saat</option>
+                            </select>
+                        </div>
+                        <div class="control-group">
+                            <div class="scan-info">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Tüm Perpetual coinler 10'ar 10'ar hızlı taranıyor</span>
+                            </div>
+                        </div>
+                        <div class="control-group">
+                            <button id="startBtn" class="cyber-btn start-btn">
+                                <i class="fas fa-play"></i>
+                                Taramayı Başlat
+                            </button>
+                        </div>
+                        <div class="control-group">
+                            <button id="stopBtn" class="cyber-btn stop-btn" disabled>
+                                <i class="fas fa-stop"></i>
+                                Durdur
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Stats Panel -->
+            <section class="stats-panel">
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="activeCoins">0</div>
+                        <div class="stat-label">Aktif Coin</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-signal"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="totalSignals">0</div>
+                        <div class="stat-label">Toplam Sinyal</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-chart-bar"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="currentBatch">0</div>
+                        <div class="stat-label">Mevcut Batch</div>
+                    </div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="uptime">00:00</div>
+                        <div class="stat-label">Çalışma Süresi</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Trading Chart Section -->
+            <section class="chart-section">
+                <div class="panel-header">
+                    <h2><i class="fas fa-chart-line"></i> Gerçek Zamanlı Grafik</h2>
+                    <div class="chart-controls">
+                        <select id="chartSymbol" class="chart-select">
+                            <!-- Major Coins -->
+                            <option value="BTCUSDT" selected>BTC/USDT</option>
+                            <option value="ETHUSDT">ETH/USDT</option>
+                            <option value="BNBUSDT">BNB/USDT</option>
+                            <option value="ADAUSDT">ADA/USDT</option>
+                            <option value="SOLUSDT">SOL/USDT</option>
+                            <option value="XRPUSDT">XRP/USDT</option>
+                            <option value="DOGEUSDT">DOGE/USDT</option>
+                            <option value="DOTUSDT">DOT/USDT</option>
+                            <option value="MATICUSDT">MATIC/USDT</option>
+                            <option value="SHIBUSDT">SHIB/USDT</option>
+                            <option value="AVAXUSDT">AVAX/USDT</option>
+                            <option value="LTCUSDT">LTC/USDT</option>
+                            <option value="LINKUSDT">LINK/USDT</option>
+                            <option value="UNIUSDT">UNI/USDT</option>
+                            <option value="BCHUSDT">BCH/USDT</option>
+                            <option value="ATOMUSDT">ATOM/USDT</option>
+                            <option value="FILUSDT">FIL/USDT</option>
+                            <option value="TRXUSDT">TRX/USDT</option>
+                            <option value="ETCUSDT">ETC/USDT</option>
+                            <option value="XLMUSDT">XLM/USDT</option>
+                            <!-- DeFi Tokens -->
+                            <option value="AAVEUSDT">AAVE/USDT</option>
+                            <option value="COMPUSDT">COMP/USDT</option>
+                            <option value="MKRUSDT">MKR/USDT</option>
+                            <option value="YFIUSDT">YFI/USDT</option>
+                            <option value="SUSHIUSDT">SUSHI/USDT</option>
+                            <option value="CRVUSDT">CRV/USDT</option>
+                            <option value="1INCHUSDT">1INCH/USDT</option>
+                            <!-- Layer 1 Coins -->
+                            <option value="NEARUSDT">NEAR/USDT</option>
+                            <option value="ALGOUSDT">ALGO/USDT</option>
+                            <option value="FTMUSDT">FTM/USDT</option>
+                            <option value="LUNAUSDT">LUNA/USDT</option>
+                            <option value="VETUSDT">VET/USDT</option>
+                            <option value="ICPUSDT">ICP/USDT</option>
+                            <option value="HBARUSDT">HBAR/USDT</option>
+                            <option value="EGLDUSDT">EGLD/USDT</option>
+                            <option value="THETAUSDT">THETA/USDT</option>
+                            <!-- Meme Coins -->
+                            <option value="PEPEUSDT">PEPE/USDT</option>
+                            <option value="FLOKIUSDT">FLOKI/USDT</option>
+                            <option value="BONKUSDT">BONK/USDT</option>
+                            <!-- Gaming & NFT -->
+                            <option value="AXSUSDT">AXS/USDT</option>
+                            <option value="SANDUSDT">SAND/USDT</option>
+                            <option value="MANAUSDT">MANA/USDT</option>
+                            <option value="ENJUSDT">ENJ/USDT</option>
+                            <option value="GALAUSDT">GALA/USDT</option>
+                            <!-- Layer 2 & Scaling -->
+                            <option value="ARBUSDT">ARB/USDT</option>
+                            <option value="OPUSDT">OP/USDT</option>
+                            <option value="IMXUSDT">IMX/USDT</option>
+                            <!-- AI & Data -->
+                            <option value="FETUSDT">FET/USDT</option>
+                            <option value="RENDERUSDT">RENDER/USDT</option>
+                            <option value="OCEANUSDT">OCEAN/USDT</option>
+                            <!-- Exchange Tokens -->
+                            <option value="CAKEUSDT">CAKE/USDT</option>
+                            <option value="GMTUSDT">GMT/USDT</option>
+                            <option value="APTUSDT">APT/USDT</option>
+                            <!-- Popular Altcoins -->
+                            <option value="CHZUSDT">CHZ/USDT</option>
+                            <option value="ZILUSDT">ZIL/USDT</option>
+                            <option value="BATUSDT">BAT/USDT</option>
+                            <option value="LRCUSDT">LRC/USDT</option>
+                            <option value="ZRXUSDT">ZRX/USDT</option>
+                            <option value="STORJUSDT">STORJ/USDT</option>
+                            <option value="SKLUSDT">SKL/USDT</option>
+                            <option value="CELOUSDT">CELO/USDT</option>
+                            <option value="KSMUSDT">KSM/USDT</option>
+                            <option value="WAVESUSDT">WAVES/USDT</option>
+                            <!-- More Popular Coins -->
+                            <option value="DASHUSDT">DASH/USDT</option>
+                            <option value="XMRUSDT">XMR/USDT</option>
+                            <option value="ZECUSDT">ZEC/USDT</option>
+                            <option value="QTUMUSDT">QTUM/USDT</option>
+                            <option value="OMGUSDT">OMG/USDT</option>
+                            <option value="NULSUSDT">NULS/USDT</option>
+                            <option value="ONTUSDT">ONT/USDT</option>
+                            <option value="IOTAUSDT">IOTA/USDT</option>
+                            <option value="XTZUSDT">XTZ/USDT</option>
+                            <option value="KNCUSDT">KNC/USDT</option>
+                            <option value="NEOUSDT">NEO/USDT</option>
+                            <option value="EOSUSDT">EOS/USDT</option>
+                            <option value="HOTUSDT">HOT/USDT</option>
+                            <option value="RVNUSDT">RVN/USDT</option>
+                            <option value="BELUSDT">BEL/USDT</option>
+                            <option value="SNXUSDT">SNX/USDT</option>
+                            <option value="RUNEUSDT">RUNE/USDT</option>
+                            <option value="DOGEUSDT">DOGE/USDT</option>
+                            <!-- New Popular 2024 -->
+                            <option value="SUIUSDT">SUI/USDT</option>
+                            <option value="TONUSDT">TON/USDT</option>
+                            <option value="INJUSDT">INJ/USDT</option>
+                            <option value="STXUSDT">STX/USDT</option>
+                            <option value="TIAUSDT">TIA/USDT</option>
+                            <option value="JUPUSDT">JUP/USDT</option>
+                            <option value="WIFUSDT">WIF/USDT</option>
+                            <option value="PYTHUSDT">PYTH/USDT</option>
+                            <!-- TÜM BİNANCE PERPETUAL COİNLER -->
+                            <option value="1000SATSUSDT">1000SATS/USDT</option>
+                            <option value="ACEUSDT">ACE/USDT</option>
+                            <option value="ACHUSDT">ACH/USDT</option>
+                            <option value="ACMUSDT">ACM/USDT</option>
+                            <option value="ADXUSDT">ADX/USDT</option>
+                            <option value="AGIUSDT">AGI/USDT</option>
+                            <option value="AGLDUSDT">AGLD/USDT</option>
+                            <option value="AIUSDT">AI/USDT</option>
+                            <option value="AKROUSDT">AKRO/USDT</option>
+                            <option value="ALPACAUSDT">ALPACA/USDT</option>
+                            <option value="ALPHAUSDT">ALPHA/USDT</option>
+                            <option value="ALTUSDT">ALT/USDT</option>
+                            <option value="AMBUSDT">AMB/USDT</option>
+                            <option value="AMPUSDT">AMP/USDT</option>
+                            <option value="ANKRUSDT">ANKR/USDT</option>
+                            <option value="ANTUSDT">ANT/USDT</option>
+                            <option value="APEUSDT">APE/USDT</option>
+                            <option value="API3USDT">API3/USDT</option>
+                            <option value="ARUSDT">AR/USDT</option>
+                            <option value="ARKMUSDT">ARKM/USDT</option>
+                            <option value="ARPAUSDT">ARPA/USDT</option>
+                            <option value="ASTRUSDT">ASTR/USDT</option>
+                            <option value="ATAUSDT">ATA/USDT</option>
+                            <option value="ATMUSDT">ATM/USDT</option>
+                            <option value="AUDIOUSDT">AUDIO/USDT</option>
+                            <option value="AVAUSDT">AVA/USDT</option>
+                            <option value="BADGERUSDT">BADGER/USDT</option>
+                            <option value="BAKEUSDT">BAKE/USDT</option>
+                            <option value="BALUSDT">BAL/USDT</option>
+                            <option value="BANDUSDT">BAND/USDT</option>
+                            <option value="BARUSDT">BAR/USDT</option>
+                            <option value="BICOUSDT">BICO/USDT</option>
+                            <option value="BLURUSDT">BLUR/USDT</option>
+                            <option value="BLZUSDT">BLZ/USDT</option>
+                            <option value="BNTUSDT">BNT/USDT</option>
+                            <option value="BOMEUSDT">BOME/USDT</option>
+                            <option value="BSWUSDT">BSW/USDT</option>
+                            <option value="BTTCUSDT">BTTC/USDT</option>
+                            <option value="BURGERUSDT">BURGER/USDT</option>
+                            <option value="C98USDT">C98/USDT</option>
+                            <option value="CFXUSDT">CFX/USDT</option>
+                            <option value="CHRUSDT">CHR/USDT</option>
+                            <option value="CKBUSDT">CKB/USDT</option>
+                            <option value="COMBOUSDT">COMBO/USDT</option>
+                            <option value="COREUSDT">CORE/USDT</option>
+                            <option value="CTCUSDT">CTC/USDT</option>
+                            <option value="CTSIUSDT">CTSI/USDT</option>
+                            <option value="CYBERUSDT">CYBER/USDT</option>
+                            <option value="DARUSDT">DAR/USDT</option>
+                            <option value="DENTUSDT">DENT/USDT</option>
+                            <option value="DGBUSDT">DGB/USDT</option>
+                            <option value="DODOUSDT">DODO/USDT</option>
+                            <option value="DUSKUSDT">DUSK/USDT</option>
+                            <option value="DYDXUSDT">DYDX/USDT</option>
+                            <option value="DYMUSDT">DYM/USDT</option>
+                            <option value="EDUUSDT">EDU/USDT</option>
+                            <option value="ETHFIUSDT">ETHFI/USDT</option>
+                            <option value="FIDAUSDT">FIDA/USDT</option>
+                            <option value="FRONTUSDT">FRONT/USDT</option>
+                            <option value="FTTUSDT">FTT/USDT</option>
+                            <option value="FXSUSDT">FXS/USDT</option>
+                            <option value="GASUSDT">GAS/USDT</option>
+                            <option value="GLMRUSDT">GLMR/USDT</option>
+                            <option value="GMXUSDT">GMX/USDT</option>
+                            <option value="GRTUSDT">GRT/USDT</option>
+                            <option value="GTCUSDT">GTC/USDT</option>
+                            <option value="HFTUSDT">HFT/USDT</option>
+                            <option value="HIFIUSDT">HIFI/USDT</option>
+                            <option value="HIGHUSDT">HIGH/USDT</option>
+                            <option value="HNTUSDT">HNT/USDT</option>
+                            <option value="HOOKUSDT">HOOK/USDT</option>
+                            <option value="IDUSDT">ID/USDT</option>
+                            <option value="IDEXUSDT">IDEX/USDT</option>
+                            <option value="ILVUSDT">ILV/USDT</option>
+                            <option value="IOSTUSDT">IOST/USDT</option>
+                            <option value="IOTXUSDT">IOTX/USDT</option>
+                            <option value="JASMYUSDT">JASMY/USDT</option>
+                            <option value="JOEUSDT">JOE/USDT</option>
+                            <option value="JTOUSDT">JTO/USDT</option>
+                            <option value="KAVAUSDT">KAVA/USDT</option>
+                            <option value="KEYUSDT">KEY/USDT</option>
+                            <option value="KLAYUSDT">KLAY/USDT</option>
+                            <option value="LDOUSDT">LDO/USDT</option>
+                            <option value="LEVERUSDT">LEVER/USDT</option>
+                            <option value="LINAUSDT">LINA/USDT</option>
+                            <option value="LITUSDT">LIT/USDT</option>
+                            <option value="LOOKSUSDT">LOOKS/USDT</option>
+                            <option value="LOOMAUSDT">LOOM/USDT</option>
+                            <option value="LPTUSDT">LPT/USDT</option>
+                            <option value="LQTYUSDT">LQTY/USDT</option>
+                            <option value="MAGICUSDT">MAGIC/USDT</option>
+                            <option value="MASKUSDT">MASK/USDT</option>
+                            <option value="MAVUSDT">MAV/USDT</option>
+                            <option value="MDTUSDT">MDT/USDT</option>
+                            <option value="MINAUSDT">MINA/USDT</option>
+                            <option value="MOVRUSDT">MOVR/USDT</option>
+                            <option value="MTLUSDT">MTL/USDT</option>
+                            <option value="MEMEUSDT">MEME/USDT</option>
+                            <option value="NKNUSDT">NKN/USDT</option>
+                            <option value="NMRUSDT">NMR/USDT</option>
+                            <option value="NOTUSDT">NOT/USDT</option>
+                            <option value="NTRAUSDT">NTRA/USDT</option>
+                            <option value="OGNUSDT">OGN/USDT</option>
+                            <option value="ONGUSDT">ONG/USDT</option>
+                            <option value="ORDIUSDT">ORDI/USDT</option>
+                            <option value="PENDLEUSDT">PENDLE/USDT</option>
+                            <option value="PERPUSDT">PERP/USDT</option>
+                            <option value="PHBUSDT">PHB/USDT</option>
+                            <option value="PIXELUSDT">PIXEL/USDT</option>
+                            <option value="POLSUSDT">POLS/USDT</option>
+                            <option value="POLYXUSDT">POLYX/USDT</option>
+                            <option value="PORTALUSDT">PORTAL/USDT</option>
+                            <option value="POWRUSDT">POWR/USDT</option>
+                            <option value="QNTUSDT">QNT/USDT</option>
+                            <option value="RADUSDT">RAD/USDT</option>
+                            <option value="RAREUSDT">RARE/USDT</option>
+                            <option value="RAYUSDT">RAY/USDT</option>
+                            <option value="RDNTUSDT">RDNT/USDT</option>
+                            <option value="REEFUSDT">REEF/USDT</option>
+                            <option value="REQUSDT">REQ/USDT</option>
+                            <option value="REZUSDT">REZ/USDT</option>
+                            <option value="RLCUSDT">RLC/USDT</option>
+                            <option value="ROSEUSDT">ROSE/USDT</option>
+                            <option value="RPLSUSDT">RPLS/USDT</option>
+                            <option value="RSRUSDT">RSR/USDT</option>
+                            <option value="SAGAUSDT">SAGA/USDT</option>
+                            <option value="SFPUSDT">SFP/USDT</option>
+                            <option value="SPELLUSDT">SPELL/USDT</option>
+                            <option value="SSVSDT">SSV/USDT</option>
+                            <option value="STGUSDT">STG/USDT</option>
+                            <option value="STMXUSDT">STMX/USDT</option>
+                            <option value="STPTUSDT">STPT/USDT</option>
+                            <option value="STRAXUSDT">STRAX/USDT</option>
+                            <option value="STRKUSDT">STRK/USDT</option>
+                            <option value="SUNUSDT">SUN/USDT</option>
+                            <option value="SUPERUSDT">SUPER/USDT</option>
+                            <option value="SXPUSDT">SXP/USDT</option>
+                            <option value="TLMUSDT">TLM/USDT</option>
+                            <option value="TOKENUSDT">TOKEN/USDT</option>
+                            <option value="TRUUSDT">TRU/USDT</option>
+                            <option value="TVKUSDT">TVK/USDT</option>
+                            <option value="UMAUSDT">UMA/USDT</option>
+                            <option value="UNFIUSDT">UNFI/USDT</option>
+                            <option value="USTCUSDT">USTC/USDT</option>
+                            <option value="VANRYUSDT">VANRY/USDT</option>
+                            <option value="VOXELUSDT">VOXEL/USDT</option>
+                            <option value="WLDUSDT">WLD/USDT</option>
+                            <option value="WOOUSDT">WOO/USDT</option>
+                            <option value="XAIUSDT">XAI/USDT</option>
+                            <option value="XEMUSDT">XEM/USDT</option>
+                            <option value="XVSUSDT">XVS/USDT</option>
+                            <option value="YGGUSDT">YGG/USDT</option>
+                            <option value="ZECUSDT">ZEC/USDT</option>
+                            <option value="ZENUSDT">ZEN/USDT</option>
+                            <option value="ZKUSDT">ZK/USDT</option>
+                            <option value="ZROUSDT">ZRO/USDT</option>
+                        </select>
+                        <select id="chartTimeframe" class="chart-select">
+                            <option value="1s">1 Saniye</option>
+                            <option value="1m">1 Dakika</option>
+                            <option value="3m">3 Dakika</option>
+                            <option value="5m" selected>5 Dakika</option>
+                            <option value="15m">15 Dakika</option>
+                            <option value="30m">30 Dakika</option>
+                            <option value="1h">1 Saat</option>
+                            <option value="2h">2 Saat</option>
+                            <option value="4h">4 Saat</option>
+                            <option value="6h">6 Saat</option>
+                            <option value="8h">8 Saat</option>
+                            <option value="12h">12 Saat</option>
+                            <option value="1d">1 Gün</option>
+                            <option value="3d">3 Gün</option>
+                            <option value="1w">1 Hafta</option>
+                            <option value="1M">1 Ay</option>
+                        </select>
+                        <button id="fibTool" class="cyber-btn mini-btn" title="Fibonacci Aracı (F)">
+                            <i class="fas fa-ruler"></i> FIB
+                        </button>
+                        <button id="fibMagnet" class="cyber-btn mini-btn" title="Mıknatıs Modu (M)">
+                            <i class="fas fa-magnet"></i>
+                        </button>
+                        <button id="fibClear" class="cyber-btn mini-btn" title="Fibonacci Temizle (C)">
+                            <i class="fas fa-eraser"></i>
+                        </button>
+                        <button id="chartFullscreen" class="cyber-btn mini-btn" title="Tam Ekran">
+                            <i class="fas fa-expand"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="chart-container">
+                    <div id="tradingChart" class="trading-chart"></div>
+                    <div class="chart-info">
+                        <div class="price-info">
+                            <span class="current-price" id="currentPrice">$0.00</span>
+                            <span class="price-change" id="priceChange">+0.00%</span>
+                        </div>
+                        <div class="indicator-info">
+                            <span class="rsi-value" id="rsiValue">RSI: --</span>
+                            <span class="trend-value" id="trendValue">Trend: --</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Signals Panel -->
+            <section class="signals-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-chart-line"></i> Canlı Sinyaller</h2>
+                    <div class="panel-actions">
+                        <button class="cyber-btn mini-btn filter-btn buy-filter active" id="buyFilterBtn">
+                            BUY
+                        </button>
+                        <button class="cyber-btn mini-btn filter-btn sell-filter active" id="sellFilterBtn">
+                            SELL
+                        </button>
+                        <button class="cyber-btn mini-btn" id="refreshBtn">
+                            <i class="fas fa-sync-alt"></i>
+                        </button>
+                        <button class="cyber-btn mini-btn" id="clearBtn">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="signals-container" id="signalsContainer">
+                    <div class="no-signals">
+                        <i class="fas fa-search"></i>
+                        <p>Henüz sinyal tespit edilmedi</p>
+                        <p>Taramayı başlatın...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Semboller paneli kaldırıldı -->
+
+            <!-- FinyX Scanners Panel -->
+            <section class="scanner-panel">
+                <div class="panel-header">
+                    <h2><i class="fas fa-radar-alt"></i> FinyX Scanners</h2>
+                    <div class="scanner-controls">
+                        <button id="scanLQ" class="cyber-btn scanner-btn lq-btn">LQ Scanner</button>
+                        <button id="scanWhale" class="cyber-btn scanner-btn whale-btn">Whale Scanner</button>
+                        <button id="scanV1" class="cyber-btn scanner-btn v1-btn">V1 Scanner</button>
+                    </div>
+                    <div class="scanner-timeframe-selector">
+                        <select id="scannerTimeframe" class="cyber-select">
+                            <option value="1m">1 dakika (1m)</option>
+                            <option value="3m">3 dakika (3m)</option>
+                            <option value="5m">5 dakika (5m)</option>
+                            <option value="15m" selected>15 dakika (15m)</option>
+                            <option value="30m">30 dakika (30m)</option>
+                            <option value="1h">1 saat (1h)</option>
+                            <option value="2h">2 saat (2h)</option>
+                            <option value="4h">4 saat (4h)</option>
+                            <option value="6h">6 saat (6h)</option>
+                            <option value="8h">8 saat (8h)</option>
+                            <option value="12h">12 saat (12h)</option>
+                            <option value="1d">1 gün (1d)</option>
+                        </select>
+                        <span class="timeframe-label">Zaman Dilimi</span>
+                        
+                        <!-- Tarama Hızı Kontrolü -->
+                        <div class="scanner-speed-control">
+                            <span class="speed-label">Tarama Hızı:</span>
+                            <select id="scanSpeed" class="cyber-select">
+                                <option value="5">Yavaş (5 paralel)</option>
+                                <option value="10">Orta (10 paralel)</option>
+                                <option value="15" selected>Hızlı (15 paralel)</option>
+                                <option value="25">Süper Hızlı (25 paralel)</option>
+                                <option value="50">Maksimum (50 paralel)</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Coin Seçim Kontrolü -->
+                        <div class="scanner-coin-control">
+                            <span class="coin-label">Tarama Tipi:</span>
+                            <select id="scanType" class="cyber-select">
+                                <option value="all" selected>Tüm Coinler</option>
+                                <option value="single">Belirli Coin</option>
+                            </select>
+                        </div>
+                        
+                        <!-- Tek Coin Seçimi - Manuel Girdi -->
+                        <div class="scanner-single-coin-control" id="singleCoinControl" style="display:none;">
+                            <span class="coin-label">Coin Adı:</span>
+                            <input type="text" id="coinSymbolInput" class="cyber-input" placeholder="BTC, ETH, BNB, XRP..." />
+                            <button id="searchCoinBtn" class="cyber-btn search-btn"><i class="fas fa-search"></i> Ara</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Scanner Results -->
+                <div class="scanner-results">
+                    <div id="lqResults" class="scanner-result-panel">
+                        <h3><i class="fas fa-bullseye"></i> LQ Signals (0.786 Fibonacci)</h3>
+                        <div id="lqSignalsList" class="signals-list"></div>
+                    </div>
+                    
+                    <div id="whaleResults" class="scanner-result-panel">
+                        <h3><i class="fas fa-chart-bar"></i> Whale Signals (Volume)</h3>
+                        <div id="whaleSignalsList" class="signals-list"></div>
+                    </div>
+                    
+                    <div id="v1Results" class="scanner-result-panel">
+                        <h3><i class="fas fa-mountain"></i> V1 Signals (Peak Fibonacci)</h3>
+                        <div id="v1SignalsList" class="signals-list"></div>
+                    </div>
+                </div>
+                
+                <!-- Scanner Status -->
+                <div class="scanner-status">
+                    <div id="scannerProgress" class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <div id="scannerStatus" class="status-text">Ready to scan</div>
+                </div>
+            </section>
+
+            <!-- Konsol Paneli -->
+            <div class="panel console-panel">
+                <div class="panel-header">
+                    <h3><i class="fas fa-terminal"></i> Canlı Konsol</h3>
+                    <button id="clearConsole" class="console-clear-btn">
+                        <i class="fas fa-trash"></i> Temizle
+                    </button>
+                </div>
+                <div class="panel-content">
+                    <div id="consoleContainer" class="console-container">
+                        <div class="console-welcome">
+                            <i class="fas fa-rocket"></i>
+                            <p>Sistem hazır! Taramayı başlatın...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader">
+            <div class="cyber-loader"></div>
+            <p id="loadingText">Yükleniyor...</p>
+        </div>
+    </div>
+
+    <!-- Notification Container -->
+    <div class="notification-container" id="notificationContainer"></div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+    <script src="{{ url_for('static', filename='chart_clean.js') }}"></script>
+    <script src="{{ url_for('static', filename='finyx_scanners.js') }}"></script>
+    <script src="{{ url_for('static', filename='scanner_integration.js') }}"></script>
+    <script src="{{ url_for('static', filename='market_buysell_scanner.js') }}"></script>
+</body>
+</html>
