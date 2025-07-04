@@ -409,6 +409,48 @@ def proxy_binance(endpoint):
             'error': str(e)
         }), 500
 
+@app.route('/api/futures/symbols')
+def get_futures_symbols_proxy():
+    """Futures sembolleri için proxy endpoint"""
+    try:
+        url = "https://fapi.binance.com/fapi/v1/exchangeInfo"
+        response = requests.get(url, timeout=10)
+        data = response.json()
+        
+        if 'symbols' in data:
+            return jsonify(data['symbols'])
+        return jsonify([])
+    except Exception as e:
+        logger.error(f"Futures sembol listesi hatası: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
+@app.route('/api/futures/klines')
+def get_futures_klines_proxy():
+    """Futures kline verileri için proxy endpoint"""
+    try:
+        # Query parametrelerini al
+        symbol = request.args.get('symbol')
+        interval = request.args.get('interval', '5m')
+        limit = request.args.get('limit', '100')
+        
+        if not symbol:
+            return jsonify({'error': 'Symbol parameter required'}), 400
+            
+        # Binance API'sine istek yap
+        url = f"https://fapi.binance.com/fapi/v1/klines?symbol={symbol}&interval={interval}&limit={limit}"
+        response = requests.get(url, timeout=10)
+        
+        return jsonify(response.json()), response.status_code
+    except Exception as e:
+        logger.error(f"Futures kline verileri hatası: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 if __name__ == '__main__':
     print("🚀 Binance Trading Signals sistemi başlatılıyor...")
     print("🌐 Web arayüzü: http://localhost:5000")
