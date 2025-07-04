@@ -380,6 +380,35 @@ def get_console_messages():
             'messages': []
         })
 
+@app.route('/api/binance/<path:endpoint>')
+def proxy_binance(endpoint):
+    """Binance API için proxy - CORS hatalarını önlemek için"""
+    try:
+        # Base URL seçimi
+        if 'fapi' in endpoint:
+            base_url = "https://fapi.binance.com/"
+            endpoint = endpoint.replace('fapi/', '')
+        else:
+            base_url = "https://api.binance.com/"
+        
+        # URL oluştur
+        url = f"{base_url}{endpoint}"
+        
+        # Tüm query parametrelerini geçir
+        params = request.args.to_dict()
+        
+        # API isteğini yap
+        response = requests.get(url, params=params, timeout=10)
+        
+        # Yanıtı döndür
+        return jsonify(response.json()), response.status_code
+    except Exception as e:
+        logger.error(f"Binance proxy hatası: {e}")
+        return jsonify({
+            'success': False,
+            'error': str(e)
+        }), 500
+
 if __name__ == '__main__':
     print("🚀 Binance Trading Signals sistemi başlatılıyor...")
     print("🌐 Web arayüzü: http://localhost:5000")
@@ -388,6 +417,7 @@ if __name__ == '__main__':
     print("   - GET  /api/status  - Tarama durumu") 
     print("   - POST /api/start_scanner - Taramayı başlat")
     print("   - POST /api/stop_scanner  - Taramayı durdur")
+    print("   - GET  /api/binance/<endpoint> - Binance API proxy")
     print("\n⏰ Sistem hazır! Web arayüzünü açabilirsiniz.")
     
     app.run(debug=True, host='0.0.0.0', port=5000)

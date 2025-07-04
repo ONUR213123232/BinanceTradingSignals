@@ -125,7 +125,7 @@ class TradingChart {
     // Binance Perpetual Futures Sembolleri Yükle
     async loadPerpetualSymbols() {
         try {
-            const response = await fetch('https://fapi.binance.com/fapi/v1/exchangeInfo');
+            const response = await fetch('/api/binance/fapi/v1/exchangeInfo');
             const data = await response.json();
             
             this.perpetualSymbols = data.symbols
@@ -1021,7 +1021,7 @@ drawCandlesticks() {
             // Binance API'den geçmiş veriler
             const interval = this.timeframeToInterval(this.currentTimeframe);
             const response = await fetch(
-                `https://api.binance.com/api/v3/klines?symbol=${this.currentSymbol}&interval=${interval}&limit=100`
+                `/api/binance/api/v3/klines?symbol=${this.currentSymbol}&interval=${interval}&limit=100`
             );
             const data = await response.json();
             
@@ -1065,6 +1065,7 @@ drawCandlesticks() {
             `${symbol}@kline_${interval}`,
             `${symbol}@ticker`
         ];
+        // WebSocket'ler için kendi proxy'mizi kullanabiliriz, ancak şimdilik HTTP isteklerine öncelik verelim
         const wsUrl = `wss://stream.binance.com:9443/stream?streams=${streams.join('/')}`;
         
         console.log('🔗 WebSocket URL:', wsUrl);
@@ -1417,7 +1418,7 @@ drawCandlesticks() {
         try {
             const symbol = this.currentSymbol;
             const interval = this.timeframeToInterval(this.currentTimeframe);
-            const url = `https://api.binance.com/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=200`;
+            const url = `/api/binance/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=200`;
             
             console.log(`📈 ${symbol} için geçmiş veri yükleniyor...`);
             
